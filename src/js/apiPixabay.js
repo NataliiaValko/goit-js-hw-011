@@ -5,9 +5,7 @@ export default class NewApiPixabay {
   #KEY = '31000801-179358ed9db1a9fc0904af43d';
   constructor() {
     this.valueForSearch = '';
-    this.numberPage = '1';
-    // this.image_type = 'photo';
-    // this.no_more_response = false;
+    this.numberPage = 1;
   }
 
   fetchGallery() {
@@ -24,17 +22,6 @@ export default class NewApiPixabay {
     });
   }
 
-  // async fetchGallery() {
-  //   try {
-  //     const response = await fetch(this.getURLRequest());
-  //     const responseObject = await response.json();
-  //     const array = await responseObject.hits;
-  //     return this.makesValidationArray(array);
-  //   } catch {
-  //     pnotifyErrorResponse();
-  //   }
-  // }
-
   get ValueForSearch() {
     return this.valueForSearch;
   }
@@ -42,21 +29,6 @@ export default class NewApiPixabay {
   set ValueForSearch(value) {
     this.valueForSearch = value;
   }
-
-  // makesValidationArray(array) {
-  //   if (array.length === 0 && this.numberPage === 1) {
-  //     pnotifyInvalidResponse();
-  //     this.no_more_response = true;
-  //   }
-
-  //   if (array.length === 0 && this.numberPage > 1) {
-  //     pnotifyNoMoreResponse();
-  //     this.no_more_response = true;
-  //   }
-
-  //   this.incrementPage();
-  //   return array;
-  // }
 
   incrementPage() {
     this.numberPage += 1;
