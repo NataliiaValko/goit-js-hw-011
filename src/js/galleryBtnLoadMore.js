@@ -117,8 +117,6 @@
 //       data: { totalHits, hits },
 //     } = await newApiPixabay.fetchGallery();
 
-//     let totalPages = Math.ceil(totalHits / hits.length) || null;
-
 //     if (totalHits === 0) {
 //       refs.gallery.innerHTML = '';
 //       Notiflix.Notify.failure(
@@ -126,7 +124,10 @@
 //       );
 //       refs.btnLoadMore.style.display = 'none';
 //       newApiPixabay.resetPage();
-//     } else if (newApiPixabay.numberPage === totalPages) {
+//     } else if (
+//       totalHits - newApiPixabay.numberPage * newApiPixabay.perPage <=
+//       0
+//     ) {
 //       Notiflix.Notify.info(
 //         "We're sorry, but you've reached the end of search results."
 //       );
@@ -155,3 +156,8 @@
 
 // refs.form.addEventListener('submit', onSubmit);
 // refs.btnLoadMore.addEventListener('click', onSubmit);
+
+// const colors = [{ hex: 1 }, { hex: 2 }, { hex: 3 }];
+
+// const [{ hex: hex1 }, { hex: hex2 }, { hex: hex3 }] = colors;
+// console.log(hex1, hex2, hex3);

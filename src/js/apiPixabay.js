@@ -6,6 +6,7 @@ export default class NewApiPixabay {
   constructor() {
     this.valueForSearch = '';
     this.numberPage = 1;
+    this.perPage = 40;
   }
 
   fetchGallery() {
@@ -16,7 +17,7 @@ export default class NewApiPixabay {
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: true,
-        per_page: 40,
+        per_page: this.perPage,
         page: this.numberPage,
       },
     });

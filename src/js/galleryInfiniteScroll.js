@@ -98,6 +98,7 @@ const onSubmit = async e => {
   if (refs.input.value.trim() === '') {
     return;
   }
+
   refs.btnLoadMore.style.display = 'none';
 
   if (newApiPixabay.valueForSearch !== refs.input.value) {
@@ -116,29 +117,24 @@ const onSubmit = async e => {
     } = await newApiPixabay.fetchGallery();
 
     let totalPages = Math.ceil(totalHits / hits.length) || null;
-
+    console.log('subm');
     if (totalHits === 0) {
-      refs.gallery.innerHTML = '';
       Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
-      newApiPixabay.resetPage();
     } else if (newApiPixabay.numberPage === totalPages) {
       Notiflix.Notify.info(
         "We're sorry, but you've reached the end of search results."
       );
       makeMarkup(getValidateArray(hits), refs.gallery);
       lightbox.refresh();
-      newApiPixabay.resetPage();
-      if (newApiPixabay.numberPage !== 1) {
-        scrollPage();
-      }
     } else {
       makeMarkup(getValidateArray(hits), refs.gallery);
       lightbox.refresh();
-      newApiPixabay.numberPage === 1
-        ? Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`)
-        : scrollPage();
+      if (newApiPixabay.numberPage === 1) {
+        Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+      }
+
       newApiPixabay.incrementPage();
       intersectionObserver.observe(refs.targetObserver);
     }
@@ -148,7 +144,6 @@ const onSubmit = async e => {
 };
 
 refs.form.addEventListener('submit', onSubmit);
-refs.btnLoadMore.addEventListener('click', onSubmit);
 
 const intersectionObserverOptions = {
   root: null,
@@ -158,15 +153,15 @@ const intersectionObserverOptions = {
 
 const intersectionObserver = new IntersectionObserver((enteries, observe) => {
   enteries.forEach(async entry => {
-    if (!entry.isIntersecting) {
+    if (!entry.isIntersecting || newApiPixabay.numberPage === 1) {
       return;
     }
     try {
       const {
         data: { totalHits, hits },
       } = await newApiPixabay.fetchGallery();
-
-      let totalPages = Math.ceil(totalHits / hits.length) || null;
+      console.log('scr');
+      let totalPages = Math.ceil(totalHits / newApiPixabay.perPage) || null;
 
       if (newApiPixabay.numberPage === totalPages) {
         Notiflix.Notify.info(
