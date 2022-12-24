@@ -156,8 +156,3 @@
 
 // refs.form.addEventListener('submit', onSubmit);
 // refs.btnLoadMore.addEventListener('click', onSubmit);
-
-// const colors = [{ hex: 1 }, { hex: 2 }, { hex: 3 }];
-
-// const [{ hex: hex1 }, { hex: hex2 }, { hex: hex3 }] = colors;
-// console.log(hex1, hex2, hex3);

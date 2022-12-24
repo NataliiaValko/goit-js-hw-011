@@ -1,4 +1,4 @@
-import Notiflix from 'notiflix';
+import { Notify } from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
@@ -84,14 +84,14 @@ const makeMarkup = (array, target) => {
   return target.insertAdjacentHTML('beforeend', markup);
 };
 
-const scrollPage = () => {
-  const { height: cardHeight } =
-    refs.gallery.firstElementChild.getBoundingClientRect();
-  window.scrollBy({
-    top: cardHeight * 2,
-    behavior: 'smooth',
-  });
-};
+// const scrollPage = () => {
+//   const { height: cardHeight } =
+//     refs.gallery.firstElementChild.getBoundingClientRect();
+//   window.scrollBy({
+//     top: cardHeight * 2,
+//     behavior: 'smooth',
+//   });
+// };
 
 const onSubmit = async e => {
   e.preventDefault();
@@ -117,22 +117,21 @@ const onSubmit = async e => {
     } = await newApiPixabay.fetchGallery();
 
     let totalPages = Math.ceil(totalHits / hits.length) || null;
+
     console.log('subm');
     if (totalHits === 0) {
-      Notiflix.Notify.failure(
+      Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
     } else if (newApiPixabay.numberPage === totalPages) {
-      Notiflix.Notify.info(
-        "We're sorry, but you've reached the end of search results."
-      );
+      Notify.info("We're sorry, but you've reached the end of search results.");
       makeMarkup(getValidateArray(hits), refs.gallery);
       lightbox.refresh();
     } else {
       makeMarkup(getValidateArray(hits), refs.gallery);
       lightbox.refresh();
       if (newApiPixabay.numberPage === 1) {
-        Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+        Notify.success(`Hooray! We found ${totalHits} images.`);
       }
 
       newApiPixabay.incrementPage();
@@ -164,7 +163,7 @@ const intersectionObserver = new IntersectionObserver((enteries, observe) => {
       let totalPages = Math.ceil(totalHits / newApiPixabay.perPage) || null;
 
       if (newApiPixabay.numberPage === totalPages) {
-        Notiflix.Notify.info(
+        Notify.info(
           "We're sorry, but you've reached the end of search results."
         );
         makeMarkup(getValidateArray(hits), refs.gallery);
